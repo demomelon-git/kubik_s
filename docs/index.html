@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Кубик — поиск из Google, Bing и Brave</title><link rel="icon" href="icon.svg"><link rel="stylesheet" href="style.css">
+<style>.wrap{max-width:560px;margin:0 auto;padding:28px 20px 60px;text-align:center}.wrap h2{margin-top:36px}.wrap ol{text-align:left;line-height:1.7}.wrap p{color:var(--mut);line-height:1.6}.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}</style></head><body>
+<main class="wrap"><div class="mascot big" id="m" style="margin:0 auto"></div>
+<div class="logo"><span style="color:#ea4335">К</span><span style="color:#fbbc05">у</span><span style="color:#4285f4">б</span><span style="color:#34a853">и</span><span style="color:#ea4335">к</span></div>
+<p>Расширение для Firefox и Fennec: свой поиск, который одновременно берёт результаты из <b>Google</b>, <b>Microsoft Bing</b> и <b>Brave</b> и объединяет их.</p>
+<div class="btns"><a class="btn" id="dl" href="#">Скачать последнюю версию</a><a class="btn" id="src" href="#" style="background:var(--soft);color:var(--fg)">Исходный код</a></div>
+<h2>Как поставить</h2>
+<ol><li>Скачай подписанный файл <code>.xpi</code> по кнопке выше.</li><li>Fennec: «Настройки» → «О Fennec», 5 раз нажми на логотип.</li><li>Выбери «Установить дополнение из файла» и укажи скачанный файл.</li><li>Открой <code>https://127.0.0.1/</code> — появится Кубик.</li></ol>
+<p>Эта страница не умеет искать сама: браузер запрещает обычным сайтам читать выдачу других поисковиков. Поиск работает только внутри расширения.</p></div>
+<script src="mascot.js"></script><script>Kubik.make(document.getElementById('m'));
+const o=location.hostname.split('.')[0],r=location.pathname.split('/')[1];
+if(location.hostname.endsWith('.github.io')&&r){const base='https://github.com/'+o+'/'+r;document.getElementById('dl').href=base+'/releases/latest';document.getElementById('src').href=base}</script></body></html>
