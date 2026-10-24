@@ -1,0 +1,74 @@
+{
+  "manifest_version": 2,
+  "name": "Кубик — поиск Google + Bing + Brave",
+  "version": "2.0.0",
+  "description": "Главная страница и поиск с помощником Кубиком. Результаты одновременно из Google, Microsoft Bing и Brave Search.",
+  "icons": {
+    "48": "icon.svg",
+    "96": "icon.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "kubik-android@local.example",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "https://127.0.0.1/*",
+    "http://127.0.0.1/*",
+    "https://www.google.com/*",
+    "https://consent.google.com/*",
+    "https://www.bing.com/*",
+    "https://api.bing.com/*",
+    "https://search.brave.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "newtab.html",
+    "results.html",
+    "style.css",
+    "mascot.js",
+    "common.js",
+    "assistant.js",
+    "engines.js",
+    "newtab.js",
+    "results.js",
+    "icon.svg"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "/newtab.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/search*",
+        "https://www.google.com/sorry/*",
+        "https://consent.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
