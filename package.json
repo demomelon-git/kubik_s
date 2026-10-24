@@ -1,0 +1,13 @@
+{
+  "name": "kubik-search",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Кубик — поиск Google + Bing + Brave для Firefox / Fennec",
+  "scripts": {
+    "lint": "web-ext lint --source-dir extension",
+    "build": "web-ext build --source-dir extension --artifacts-dir dist --overwrite-dest",
+    "sign": "web-ext sign --source-dir extension --channel unlisted --artifacts-dir signed"
+  },
+  "devDependencies": { "web-ext": "^8.0.0" },
+  "license": "MIT"
+}
