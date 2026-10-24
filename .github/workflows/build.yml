@@ -1,0 +1,40 @@
+name: Сборка и подпись расширения
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+      AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Проверка (не блокирует сборку)
+        run: npx --yes web-ext lint --source-dir extension || true
+      - name: Сборка zip
+        run: npx --yes web-ext build --source-dir extension --artifacts-dir dist --overwrite-dest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kubik-unsigned
+          path: dist/*.zip
+      - name: Подпись на addons.mozilla.org (если заданы секреты)
+        if: env.AMO_JWT_ISSUER != ''
+        run: npx --yes web-ext sign --source-dir extension --channel unlisted --api-key "$AMO_JWT_ISSUER" --api-secret "$AMO_JWT_SECRET" --artifacts-dir signed
+      - uses: actions/upload-artifact@v4
+        if: env.AMO_JWT_ISSUER != ''
+        with:
+          name: kubik-signed
+          path: signed/*.xpi
+      - name: Релиз
+        if: startsWith(github.ref, 'refs/tags/') && env.AMO_JWT_ISSUER != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          files: signed/*.xpi
